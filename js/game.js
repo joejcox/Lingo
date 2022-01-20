@@ -1,27 +1,9 @@
+import Square from "./square.js";
 const grid = document.getElementById("board");
 const game = document.querySelector(".game");
 const startMenu = document.querySelector(".start-screen");
-const resetButton = document.getElementById("reset");
-const startButton = document.getElementById("start");
 
-class Square {
-  constructor(width, height, spacing) {
-    this.width = `calc(${width}% - 10px)`;
-    this.height = `${height}px`;
-    this.spacing = `${spacing}px`;
-  }
-
-  render() {
-    const square = document.createElement("div");
-    square.className = "square untouched";
-    square.style.width = this.width;
-    square.style.height = this.height;
-    square.style.margin = this.spacing;
-    grid.appendChild(square);
-  }
-}
-
-class Board {
+export default class Board {
   constructor() {
     this.rows = 5;
     this.columns = 6;
@@ -108,33 +90,3 @@ class Board {
     }, 500);
   }
 }
-
-const Game = new Board();
-
-function handleInput(e) {
-  if (!Game.loaded) return false;
-
-  if (e.keyCode === 13) {
-    Game.checkLetters();
-  }
-
-  if (e.keyCode === 8) {
-    Game.removeLetter();
-  }
-
-  if (e.keyCode < 65 || e.keyCode > 90) return false;
-
-  Game.addLetter(e.key);
-}
-
-requestAnimationFrame(handleInput);
-
-document.addEventListener("keydown", handleInput);
-
-startButton.addEventListener("click", function () {
-  Game.init();
-});
-
-resetButton.addEventListener("click", function () {
-  Game.end();
-});
